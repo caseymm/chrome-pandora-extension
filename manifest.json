@@ -1,0 +1,16 @@
+{
+  "name": "Trello addition test",
+  "manifest_version": 2,
+  "version": "0.1.1",
+  "description": "Add time in first column for all members.",
+  "icons": { "16": "bowser.gif",
+             "48": "bowser.gif",
+             "128": "bowser.gif" },
+  "content_scripts": [
+    {
+      "matches": ["https://trello.com/*"],
+      "css": ["basic.css"],
+      "js": ["jquery.min.js", "contentscript.js"]
+    }
+  ]
+}
