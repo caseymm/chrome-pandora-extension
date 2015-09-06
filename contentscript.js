@@ -1,9 +1,10 @@
 $(document).ready(function() {
-  var run_time = 0;
-  var live_hours = {};
-  var all_members = $('.js-list.list-wrapper').first().find('img.member-avatar');
+  var live_hours;
+  var first_col = $('.js-list.list-wrapper').first().attr('id', 'first-col');
 
   function addWaiting(){
+    var all_members = $(first_col).find('img.member-avatar');
+    live_hours = {};
     $.each(all_members, function(i,d){
       var hours = parseFloat($(d).parent().parent().parent().find('.badge.badge-points.point-count').first().html());
       var member_name = $(d).attr('title');
@@ -30,27 +31,32 @@ $(document).ready(function() {
         } else {
           $(d).addClass('all-good');
         }
-        if(run_time === 0){
-          $(d).append('<div class="hour-ct">'+live_hours[sidebar_member]+'</div>');
-        } else {
+        // if(typeof $(d).find('.hour-ct').html() != 'undefined'){
+        //   console.log($(d).find('.hour-ct'));
+        //   $(d).find('.hour-ct').html(live_hours[sidebar_member]);
+        // } else {
+          $(d).append('<div class="hour-ct"></div>');
           $(d).find('.hour-ct').html(live_hours[sidebar_member]);
-        }
+        // }
       }
+      $(d).click(function(){
+        addWaiting();
+      })
     })
-    run_time += 1;
   }
 
   setTimeout(function(){
     addWaiting();
   }, 2000);
 
+  // maybe return on the last time this happens?
+  $('#first-col .list-card-details .badges').bind("DOMSubtreeModified",function(){
+    console.log('change');
+    addWaiting();
+  });
 
-  // $('.icon-close').click(function(){
-  //   setTimeout(function(){
-  //     live_hours = {};
-  //     addWaiting();
-  //   }, 1000);
-  // });
-
+  // setInterval(function(){
+  //   addWaiting();
+  // },3000);
 
 });
