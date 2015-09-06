@@ -31,13 +31,9 @@ $(document).ready(function() {
         } else {
           $(d).addClass('all-good');
         }
-        // if(typeof $(d).find('.hour-ct').html() != 'undefined'){
-        //   console.log($(d).find('.hour-ct'));
-        //   $(d).find('.hour-ct').html(live_hours[sidebar_member]);
-        // } else {
-          $(d).append('<div class="hour-ct"></div>');
-          $(d).find('.hour-ct').html(live_hours[sidebar_member]);
-        // }
+        $(d).append('<div class="hour-ct"></div>');
+        var f_num = String(live_hours[sidebar_member]).replace('0.', '.');
+        $(d).find('.hour-ct').html(f_num);
       }
       $(d).click(function(){
         addWaiting();
@@ -47,16 +43,14 @@ $(document).ready(function() {
 
   setTimeout(function(){
     addWaiting();
-  }, 2000);
+  }, 1000);
 
-  // maybe return on the last time this happens?
-  $('#first-col .list-card-details .badges').bind("DOMSubtreeModified",function(){
-    console.log('change');
+  $('#first-col .list-card').click(function(){
     addWaiting();
   });
 
-  // setInterval(function(){
-  //   addWaiting();
-  // },3000);
+  $('.window-overlay').click(function(){
+    addWaiting();
+  });
 
 });
