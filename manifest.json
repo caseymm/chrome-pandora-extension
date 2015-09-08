@@ -1,7 +1,7 @@
 {
   "name": "Member scrum addition for Trello",
   "manifest_version": 2,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Add time in first column for all members. Runs on top of \"Scrum for Trello\" extension.",
   "icons": { "16": "trello_sum.png",
              "48": "trello_sum.png",

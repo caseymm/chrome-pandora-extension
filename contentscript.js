@@ -8,13 +8,16 @@ $(document).ready(function() {
     $.each(all_members, function(i,d){
       var hours = parseFloat($(d).parent().parent().parent().find('.badge.badge-points.point-count').first().html());
       var member_name = $(d).attr('title');
+      if(isNaN(hours)){
+        hours = 0;
+      }
       if(!(live_hours[member_name])){
         live_hours[member_name] = hours || 0;
       } else {
         live_hours[member_name] += hours;
       }
     })
-    // console.log(live_hours);
+    console.log(live_hours);
     appendHours();
   }
 
@@ -49,7 +52,7 @@ $(document).ready(function() {
   setTimeout(function(){
     first_col = $('.js-list.list-wrapper').first().attr('id', 'first-col');
     addWaiting();
-  }, 3000);
+  }, 4000);
 
   $('#first-col .list-card').click(function(){
     addWaiting();
