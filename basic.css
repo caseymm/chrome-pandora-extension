@@ -1,10 +1,14 @@
 .hour-ct{
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .member.all-good{
   background-color: #A3D1A6;
+}
+
+.member.caution{
+  background-color: #F0E286;
 }
 
 .member.hold-up{

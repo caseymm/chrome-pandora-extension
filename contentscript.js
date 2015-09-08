@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var live_hours;
-  var first_col = $('.js-list.list-wrapper').first().attr('id', 'first-col');
+  var first_col;
 
   function addWaiting(){
     var all_members = $(first_col).find('img.member-avatar');
@@ -14,7 +14,7 @@ $(document).ready(function() {
         live_hours[member_name] += hours;
       }
     })
-    console.log(live_hours);
+    // console.log(live_hours);
     appendHours();
   }
 
@@ -26,8 +26,13 @@ $(document).ready(function() {
         if(current_height === 30){
           $(d).height(current_height+25);
         }
-        if(live_hours[sidebar_member] > 32){
+        $(d).removeClass('hold-up');
+        $(d).removeClass('caution');
+        $(d).removeClass('all-good');
+        if(live_hours[sidebar_member] > 40){
           $(d).addClass('hold-up');
+        } else if(live_hours[sidebar_member] > 32){
+          $(d).addClass('caution');
         } else {
           $(d).addClass('all-good');
         }
@@ -42,8 +47,9 @@ $(document).ready(function() {
   }
 
   setTimeout(function(){
+    first_col = $('.js-list.list-wrapper').first().attr('id', 'first-col');
     addWaiting();
-  }, 1000);
+  }, 3000);
 
   $('#first-col .list-card').click(function(){
     addWaiting();
