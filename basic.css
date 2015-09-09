@@ -14,3 +14,16 @@
 .member.hold-up{
   background-color: #D4ABAB;
 }
+
+#tooltip{
+  position: relative;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  height: auto;
+  width: 200px;
+  border-radius: 3px;
+  -webkit-box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
+  -moz-box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
+  box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
+}

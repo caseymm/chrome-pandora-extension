@@ -1,6 +1,13 @@
 $(document).ready(function() {
-  var live_hours;
-  var first_col;
+  var live_hours,
+      first_col,
+      mouseX,
+      mouseY;
+
+  $(document).mousemove(function(e) {
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+  }).mouseover();
 
   function addWaiting(){
     var all_members = $(first_col).find('img.member-avatar');
@@ -17,7 +24,7 @@ $(document).ready(function() {
         live_hours[member_name] += hours;
       }
     })
-    console.log(live_hours);
+    // console.log(live_hours);
     appendHours();
   }
 
@@ -42,17 +49,28 @@ $(document).ready(function() {
         $(d).append('<div class="hour-ct"></div>');
         var f_num = String(live_hours[sidebar_member]).replace('0.', '.');
         $(d).find('.hour-ct').html(f_num);
+        $(d).on('mouseover', function(){
+          console.log(sidebar_member);
+          $('#tooltip').css({'display': 'visible', 'top': String(mouseY+5)+'px', 'left': String(mouseX)+'px'});
+          $('#tooltip').html(sidebar_member);
+        });
+      } else{
+        $(d).css('margin-bottom', '25px');
       }
       $(d).click(function(){
         addWaiting();
-      })
+      });
+      // $(d).on('mouseout', function(){
+      //   $('#tooltip').css('display', 'none');
+      // });
     })
   }
 
   setTimeout(function(){
+    $('#content').append('<div id="tooltip"></div>')
     first_col = $('.js-list.list-wrapper').first().attr('id', 'first-col');
     addWaiting();
-  }, 4000);
+  }, 2000);
 
   $('#first-col .list-card').click(function(){
     addWaiting();
