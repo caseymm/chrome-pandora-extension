@@ -3,19 +3,20 @@
   font-size: 11px;
 }
 
-.member.all-good{
+.member.all-good, .member.all-good:hover{
   background-color: #A3D1A6;
 }
 
-.member.caution{
+.member.caution, .member.caution:hover{
   background-color: #F0E286;
 }
 
-.member.hold-up{
+.member.hold-up, .member.hold-up:hover{
   background-color: #D4ABAB;
 }
 
 #tooltip{
+  font-size: 12px;
   display: none;
   position: relative;
   z-index: 5;
@@ -23,7 +24,7 @@
   padding: 5px;
   height: auto;
   width: 190px;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   border-radius: 3px;
   -webkit-box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
   -moz-box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
@@ -46,7 +47,7 @@
 
 #tooltip:after{
   border: 6px solid transparent;
-  border-left-color: #999;
+  border-left-color: #ccc;
   border-right-width: 0px;
   content: "";
   display: block;
@@ -56,4 +57,26 @@
   top: 8px;
   left: 200px;
   z-index: 4;
+}
+
+#tooltip #member-name{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#tooltip #tasks{
+  border: 0px solid #fff;
+}
+
+#tooltip #tasks td{
+  border-width: 0px;
+}
+
+#tooltip #tasks tr{
+  border: 0px solid #ccc;
+  border-bottom-width: 1px;
+}
+
+#tooltip #tasks tr:last-child{
+  border-bottom-width: 0px;
 }

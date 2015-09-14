@@ -1,27 +1,23 @@
 $(document).ready(function() {
   var live_hours,
-      first_col,
-      mouseX,
-      mouseY;
-
-  $(document).mousemove(function(e) {
-    mouseX = e.pageX;
-    mouseY = e.pageY;
-  }).mouseover();
+      first_col;
 
   function addWaiting(){
     var all_members = $(first_col).find('img.member-avatar');
     live_hours = {};
     $.each(all_members, function(i,d){
+      var card_title = $(d).parent().parent().parent().find('.list-card-title').html().split("</span>")[1];
       var hours = parseFloat($(d).parent().parent().parent().find('.badge.badge-points.point-count').first().html());
       var member_name = $(d).attr('title');
       if(isNaN(hours)){
         hours = 0;
       }
       if(!(live_hours[member_name])){
-        live_hours[member_name] = hours || 0;
+        live_hours[member_name] = {'total': hours || 0, 'tasks': []};
+        live_hours[member_name]['tasks'].push([card_title, hours]);
       } else {
-        live_hours[member_name] += hours;
+        live_hours[member_name]['total'] += hours;
+        live_hours[member_name]['tasks'].push([card_title, hours]);
       }
     })
     appendHours();
@@ -38,25 +34,37 @@ $(document).ready(function() {
         $(d).removeClass('hold-up');
         $(d).removeClass('caution');
         $(d).removeClass('all-good');
-        if(live_hours[sidebar_member] > 40){
+        var set_class = 'all-good';
+        if(live_hours[sidebar_member]['total'] > 40){
           $(d).addClass('hold-up');
-        } else if(live_hours[sidebar_member] > 32){
-          $(d).addClass('caution');
-        } else {
-          $(d).addClass('all-good');
+          set_class = 'caution';
+        } else if(live_hours[sidebar_member]['total'] > 32){
+          set_class = 'caution';
         }
+        $(d).addClass(set_class);
+
         $(d).append('<div class="hour-ct"></div>');
-        var f_num = String(live_hours[sidebar_member]).replace('0.', '.');
+        var f_num = String(live_hours[sidebar_member]['total']).replace('0.', '.');
         $(d).find('.hour-ct').html(f_num);
         $(d).mouseenter(function(event, ui){
           var position = $(d).position();
           var p_top = position['top'];
           var p_left = ($('.board-main-content').width() + position['left']) - 207;
           $('#tooltip').css({'display': 'block', 'top': String(p_top)+'px', 'left': String(p_left)+'px'});
-          $('#tooltip').html(sidebar_member.split(' (')[0]);
+          $('#tooltip #member-name').html(sidebar_member.split(' (')[0]+' '+'('+live_hours[sidebar_member]['tasks'].length+')');
+
+          live_hours[sidebar_member]['tasks'].sort(function(first, second) {
+            return second[1] - first[1];
+          });
+          $.each(live_hours[sidebar_member]['tasks'], function(i, d){
+            $('#tooltip #tasks').append('<tr id="tr-'+i+'"></tr>');
+            $('#tr-'+i).append('<td class="hour-block">'+d[1]+'</td>');
+            $('#tr-'+i).append('<td class="item-task">'+d[0]+'</td>');
+          })
         });
         $(d).mouseleave(function(){
           $('#tooltip').css('display', 'none');
+          $('#tooltip #tasks').find('tr').remove();
         });
       } else{
         $(d).css('margin-bottom', '30px');
@@ -68,7 +76,7 @@ $(document).ready(function() {
   }
 
   setTimeout(function(){
-    $('#content').append('<div id="tooltip"></div>')
+    $('#content').append('<div id="tooltip"><div id="member-name"></div><table id="tasks"></table></div>')
     first_col = $('.js-list.list-wrapper').first().attr('id', 'first-col');
     addWaiting();
   }, 2000);
