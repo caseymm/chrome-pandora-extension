@@ -24,7 +24,6 @@ $(document).ready(function() {
         live_hours[member_name] += hours;
       }
     })
-    // console.log(live_hours);
     appendHours();
   }
 
@@ -49,20 +48,22 @@ $(document).ready(function() {
         $(d).append('<div class="hour-ct"></div>');
         var f_num = String(live_hours[sidebar_member]).replace('0.', '.');
         $(d).find('.hour-ct').html(f_num);
-        $(d).on('mouseover', function(){
-          console.log(sidebar_member);
-          $('#tooltip').css({'display': 'visible', 'top': String(mouseY+5)+'px', 'left': String(mouseX)+'px'});
-          $('#tooltip').html(sidebar_member);
+        $(d).mouseenter(function(event, ui){
+          var position = $(d).position();
+          var p_top = position['top'];
+          var p_left = ($('.board-main-content').width() + position['left']) - 207;
+          $('#tooltip').css({'display': 'block', 'top': String(p_top)+'px', 'left': String(p_left)+'px'});
+          $('#tooltip').html(sidebar_member.split(' (')[0]);
+        });
+        $(d).mouseleave(function(){
+          $('#tooltip').css('display', 'none');
         });
       } else{
-        $(d).css('margin-bottom', '25px');
+        $(d).css('margin-bottom', '30px');
       }
       $(d).click(function(){
         addWaiting();
       });
-      // $(d).on('mouseout', function(){
-      //   $('#tooltip').css('display', 'none');
-      // });
     })
   }
 
