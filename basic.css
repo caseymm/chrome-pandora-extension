@@ -81,8 +81,8 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
-  top: 0px;
-  background-color: rgba(255,255,255,0.25);
+  top: 3px;
+  /*background-color: rgba(255,255,255,0.25);*/
 }
 
 .show-arrow.show{
@@ -228,6 +228,7 @@ th, td{
 
 .iter{
   width: 30px;
+  padding-left: 10px !important;
 }
 
 #img, #info{

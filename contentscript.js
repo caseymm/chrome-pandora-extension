@@ -55,7 +55,10 @@ $(document).ready(function() {
           if($('#track'+track.track_number).length > 0){
             console.log($('#track'+track.track_number));
           } else {
-            $('#my-content #info tbody').append('<tr><td id="track'+track.track_number+'" class="iter">'+track.track_number+'</td><td>'+track.name+'</td><td><div class="pop" style="width:'+track.popularity+'px;"></div><div>'+track.popularity+'</div></td></tr>');
+            $('#my-content #info tbody').append('<tr id="id'+i+'"><td id="track'+track.track_number+'" class="iter">'+track.track_number+'</td><td>'+track.name+'</td><td><div class="pop" style="width:'+track.popularity+'px;"></div><div>'+track.popularity+'</div></td></tr>');
+            if(track.name === $('.playerBarSong').text()){
+              $('#id'+i).css('background-color', 'rgba(255,255,255,0.2)');
+            }
           }
         })
       });
