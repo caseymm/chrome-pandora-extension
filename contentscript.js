@@ -5,33 +5,31 @@ $(document).ready(function() {
 
   console.log('loading Pandora extension!');
   var container = $('#mainContentContainer');
-  var table = '<table><thead><tr><th></th><th>Track</th><th>Popularity</th></tr></thead><tbody></tbody></table>';
-  var header = '<h2 id="album-name"></h2><h4 id="artist"></h4><h4 id="album-date"></h4><div id="album-popularity"></div>';
-  $('#topnav').after('<div id="my-content"><div id="contain"><div id="img"></div><div id="info">'+header+table+'</div></div></div>');
+  var table = '<table class="table"><thead><tr><th class="iter"></th><th>Track</th><th>Popularity</th></tr></thead><tbody></tbody></table>';
+  var header = '<div id="album-popularity"></div><h2 id="album-name"></h2><div id="artist"></div>';
+  $('#topnav').after('<div id="my-content"><div id="contain"><div id="img"><h4 id="album-date"></h4></div><div id="info">'+header+table+'</div></div></div>');
   // $('#my-content').after(container);
-  $('#my-content').after($('.stationContent'));
+  $('#my-content').after('<div id="sidebar"></div>');
+  $('#sidebar').append($('.stationContent'));
   $('.skinContainer').hide();
-  $('body').append('<img class="spotify" width="300" height="300" src="" crossOrigin="anonymous" style="display: inline;">');
+  $('body').append('<img class="spotify" width="100%" height="100%" src="" crossOrigin="anonymous" style="display: inline;">');
   $('body').append('<div id="blocks"></div>');
   $('#user_menu_dd ul').append('<li><a href="/feed">Music Feed</a></li>');
   $('#user_menu_dd ul').append('<li><a id="current-station" href="'+currentPathName+'">Current Station</a></li>');
-  $('#my-content #img').html($(currentSong).find('img.art'));
-  $('#')
+  $('#my-content #img').prepend($(currentSong).find('img.art'));
 
   // $(window).on('resize', function(){
   //   $('#mainContentContainer').width($(window).width()+190);
   // });
 
-  $('.stationContent').prepend('<div class="show-arrow"></div>');
+  $('#sidebar').prepend('<div class="show-arrow"></div>');
   $('.show-arrow').click(function(){
     if($(this).hasClass('show')){
       $(this).removeClass('show');
-      // $('.stationContent').removeClass('show', 1000);
-      $('.stationContent').animate({ "left": "-=190px" }, "fast" );
+      $('#sidebar').animate({ "left": "-=190px" }, "fast" );
     } else {
       $(this).addClass('show');
-      // $('.stationContent').addClass('show', 1000);
-      $('.stationContent').animate({ "left": "+=190px" }, "fast" );
+      $('#sidebar').animate({ "left": "+=190px" }, "fast" );
     }
   });
 
@@ -41,21 +39,24 @@ $(document).ready(function() {
 
     spotifyApi.getAlbum(match.id).then(function(album){
       $('#album-popularity').html(album.popularity);
-      $('#album-date').html(album.release_date);
+      $('#album-date').html(moment(album.release_date).format("MMM YYYY"));
     });
 
     spotifyApi.getAlbumTracks(match.id).then(function(data){
       var trackIds = [];
       $.each(data.items, function(i, item){
         // console.log(item);
-        // $('#my-content #info tbody').append('<tr><td>'+item.track_number+'</td><td>'+item.name+'</td><td>'+item.name+'</td></tr>');
         trackIds.push(item.id);
       });
       spotifyApi.getTracks(trackIds).then(function(data){
         console.log(data);
         $.each(data.tracks, function(i, track){
           console.log(track);
-          $('#my-content #info tbody').append('<tr><td>'+track.track_number+'</td><td>'+track.name+'</td><td>'+track.popularity+'</td></tr>');
+          if($('#track'+track.track_number).length > 0){
+            console.log($('#track'+track.track_number));
+          } else {
+            $('#my-content #info tbody').append('<tr><td id="track'+track.track_number+'" class="iter">'+track.track_number+'</td><td>'+track.name+'</td><td><div class="pop" style="width:'+track.popularity+'px;"></div><div>'+track.popularity+'</div></td></tr>');
+          }
         })
       });
     });
@@ -76,7 +77,7 @@ $(document).ready(function() {
       });
       console.log(colorArr.join(', '));
       // currentSong = $('.stationSlides.clearfix .slide')[1];
-      $('#my-content #img').html($('img.spotify'));
+      $('#my-content #img').prepend($('img.spotify'));
       $('body').attr('style', 'background: linear-gradient(270deg, '+colorArr.join(', ')+');');
     });
   }
@@ -113,7 +114,7 @@ $(document).ready(function() {
                 var match = _.findWhere(data.items, {name: nAlbumName});
                 if(match && count === 0){
                   count += 1;
-                  $('#artist').html('<a href="'+artist.external_urls.spotify+'" target="_blank">'+artist.name+'</a>');
+                  $('#artist').html('<a href="'+artist.external_urls.spotify+'" target="_blank">by '+artist.name+'</a>');
                   $('#album-name').html('<a href="'+match.external_urls.spotify+'" target="_blank">'+albumName+'</a>');
                   pairIt(match);
                   return;
@@ -131,7 +132,7 @@ $(document).ready(function() {
                   var match = _.findWhere(data.items, {name: nAlbumName});
                   if(match && count === 0){
                     count += 1;
-                    $('#artist').html('<a href="'+artist.external_urls.spotify+'" target="_blank">'+artist.name+'</a>');
+                    $('#artist').html('<a href="'+artist.external_urls.spotify+'" target="_blank">by '+artist.name+'</a>');
                     $('#album-name').html('<a href="'+match.external_urls.spotify+'" target="_blank">'+albumName+'</a>');
                     pairIt(match);
                     return;

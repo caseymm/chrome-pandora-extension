@@ -13,7 +13,7 @@
     {
       "matches": ["https://www.pandora.com/*", "http://www.pandora.com/*"],
       "css": ["basic.css"],
-      "js": ["jquery.min.js", "underscore.js", "spotify-api.js", "color-thief.js", "contentscript.js"]
+      "js": ["jquery.min.js", "underscore.js", "spotify-api.js", "color-thief.js", "moment.min.js", "contentscript.js"]
     }
   ]
 }
