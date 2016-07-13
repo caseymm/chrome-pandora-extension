@@ -42,26 +42,55 @@ body {
 
 #mainContentContainer{
   margin-top: 120px;
+  left: -190px;
+  box-shadow: none !important;
 }
 
 #mainContentContainer .top{
   display: none;
 }
 .contentnav{
-  background-color: transparent !important;
+  display: none !important;
+  /*background-color: transparent !important;
   color: #fff;
-  border-bottom: 0px solid transparent !important;
+  border-bottom: 0px solid transparent !important;*/
 }
-.contentnav div{
+/*.contentnav div{
   float: right !important;
+}*/
+.home .homeRightSide{
+  width: 100% !important;
+    /*padding-left: 0px !important;*/
 }
+
 .contentContainer, .adSupported-layout .contentContainer{
   width: 100% !important;
   background-color: transparent !important;
 }
 .stationSlides.clearfix{
   width: 100% !important;
-  left: 170px !important;
+  /*left: 170px !important;*/
+}
+
+.show-arrow{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url('https://cdn1.vox-cdn.com/uploads/chorus_asset/file/6783963/arrow-right.0.png');
+  background-size: 50px 40px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  right: -38px;
+  top: 3px;
+}
+
+.show-arrow.show{
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
 }
 
 .stationContent{
@@ -70,7 +99,19 @@ body {
   position: fixed !important;
   top: 96px !important;
   border-top: 1px solid rgba(0,0,0,.1) !important;
+  /*left: -190px !important;*/
+  -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
 }
+
+/*.stationContent:after{
+  content: 'show';
+  left: 0px;
+}*/
+
+/*.stationContent.show{
+  -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+  /*left: 0px !important;
+}*/
 
 #playerBar, #trackInfo{
   background: rgba(255,255,255,0.25) !important;
@@ -124,4 +165,30 @@ body {
 
 .fxCol-cont-1{
   background: transparent !important;
+}
+
+img.spotify, #blocks{
+  float: right;
+}
+
+#my-content{
+  width: 100%;
+  margin-top: 130px;
+}
+
+#my-content #contain{
+  margin: auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+#my-content #img{
+  height: 300px;
+  width: 300px;
+  display: inline-block;
+}
+
+#my-content #info{
+  display: inline-block;
+  list-style: none;
 }
