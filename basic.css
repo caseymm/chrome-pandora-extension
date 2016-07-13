@@ -12,6 +12,7 @@ body {
   background-size: 400% 400% !important;
   -webkit-animation: colors 60s ease infinite !important;
   animation: colors 60s ease infinite !important;
+  font-family: 'Helvetica Neue' !important;
 }
 
 @-webkit-keyframes colors {
@@ -99,7 +100,7 @@ body {
   position: fixed !important;
   top: 96px !important;
   border-top: 1px solid rgba(0,0,0,.1) !important;
-  /*left: -190px !important;*/
+  left: -190px !important;
   -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
 }
 
@@ -116,6 +117,10 @@ body {
 #playerBar, #trackInfo{
   background: rgba(255,255,255,0.25) !important;
   text-shadow: none !important;
+}
+
+.playerBarAlbum{
+  overflow: scroll;
 }
 
 #brandingBar{
@@ -191,4 +196,43 @@ img.spotify, #blocks{
 #my-content #info{
   display: inline-block;
   list-style: none;
+  margin-left: 20px;
+}
+
+th{
+  text-align: left !important;
+}
+
+tr{
+  border-bottom: 1px solid rgba(255,255,255,.2) !important;
+}
+
+tr:last-of-type{
+  border-bottom-width: 0px !important;
+}
+
+td{
+  padding: 3px 5px !important;
+}
+
+#img, #info{
+  vertical-align: top !important;
+}
+
+a{
+  text-decoration: none !important;
+  cursor: pointer !important;
+  color: #fff !important;
+}
+
+a:hover{
+  color: #000 !important;
+}
+
+h2{
+  font-size: 26px !important;
+}
+
+h4{
+  font-size: 18px !important;
 }
