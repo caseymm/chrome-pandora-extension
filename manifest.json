@@ -1,16 +1,19 @@
 {
-  "name": "Member scrum addition for Trello",
+  "name": "Style Pandora",
   "manifest_version": 2,
-  "version": "0.1.4",
-  "description": "Add time in first column for all members. Runs on top of \"Scrum for Trello\" extension.",
-  "icons": { "16": "trello_sum.png",
-             "48": "trello_sum.png",
-             "128": "trello_sum.png" },
+  "version": "0.0.1",
+  "description": "Reskin Pandora",
+  "icons": { "16": "bowser.gif",
+             "48": "bowser.gif",
+             "128": "bowser.gif" },
+   "permissions": [
+     "*://*/*"
+  ],
   "content_scripts": [
     {
-      "matches": ["https://trello.com/*"],
+      "matches": ["https://www.pandora.com/*", "http://www.pandora.com/*"],
       "css": ["basic.css"],
-      "js": ["jquery.min.js", "contentscript.js"]
+      "js": ["jquery.min.js", "underscore.js", "spotify-api.js", "color-thief.js", "contentscript.js"]
     }
   ]
 }

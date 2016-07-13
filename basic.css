@@ -1,82 +1,127 @@
-.hour-ct{
-  text-align: center;
-  font-size: 11px;
+/*::-webkit-scrollbar {
+  background-color: #1657C5;
+  width: 4px;
+  height: 4px;
+}*/
+
+body {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  /*background: linear-gradient(270deg, #c2e59c, #64b3f4) !important;*/
+  background-size: 400% 400% !important;
+  -webkit-animation: colors 60s ease infinite !important;
+  animation: colors 60s ease infinite !important;
 }
 
-.member.all-good, .member.all-good:hover{
-  background-color: #A3D1A6;
+@-webkit-keyframes colors {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes colors {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes colors {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
-.member.caution, .member.caution:hover{
-  background-color: #F0E286;
+.jspVerticalBar{
+  right: 0px !important;
+  width: 4px !important;
 }
 
-.member.hold-up, .member.hold-up:hover{
-  background-color: #D4ABAB;
+.jspDrag{
+  background: rgba(0,0,0,0.3) !important;
+  border-radius: 0px !important;
 }
 
-#tooltip{
-  font-size: 12px;
+#mainContentContainer{
+  margin-top: 120px;
+}
+
+#mainContentContainer .top{
   display: none;
-  position: relative;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  height: auto;
-  width: 190px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  -webkit-box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
-  -moz-box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
-  box-shadow: 2px 2px 12px 1px rgba(0,0,0,0.35);
+}
+.contentnav{
+  background-color: transparent !important;
+  color: #fff;
+  border-bottom: 0px solid transparent !important;
+}
+.contentnav div{
+  float: right !important;
+}
+.contentContainer, .adSupported-layout .contentContainer{
+  width: 100% !important;
+  background-color: transparent !important;
+}
+.stationSlides.clearfix{
+  width: 100% !important;
+  left: 170px !important;
 }
 
-#tooltip:before{
-  border: 5px solid transparent;
-  border-left-color: #fff;
-  border-right-width: 0px;
-  content: "";
-  display: block;
-  height: 0;
-  width: 0;
-  position: absolute;
-  top: 9px;
-  left: 200px;
-  z-index: 6;
+.stationContent{
+  background: rgba(255,255,255,0.25) !important;
+  border-right: 0px solid transparent !important;
+  position: fixed !important;
+  top: 96px !important;
+  border-top: 1px solid rgba(0,0,0,.1) !important;
 }
 
-#tooltip:after{
-  border: 6px solid transparent;
-  border-left-color: #ccc;
-  border-right-width: 0px;
-  content: "";
-  display: block;
-  height: 0;
-  width: 0;
-  position: absolute;
-  top: 8px;
-  left: 200px;
-  z-index: 4;
+#playerBar, #trackInfo{
+  background: rgba(255,255,255,0.25) !important;
+  text-shadow: none !important;
 }
 
-#tooltip #member-name{
-  font-size: 14px;
-  font-weight: bold;
+#brandingBar{
+  background-color: rgba(0,0,0,.7) !important;
 }
 
-#tooltip #tasks{
-  border: 0px solid #fff;
+.trackData{
+  text-shadow: none !important;
 }
 
-#tooltip #tasks td{
-  border-width: 0px;
+#trackInfoButtons{
+  display: none !important;
 }
 
-#tooltip #tasks tr{
-  border: 0px solid #ccc;
-  border-bottom-width: 1px;
+.stationListItem.selected{
+  background: rgba(255,255,255,0.5) !important;
+  color: #ffffff;
+  border-color: transparent !important;
+  border-top: 0px solid transparent !important;
+  border-bottom: 0px solid transparent !important;
 }
 
-#tooltip #tasks tr:last-child{
-  border-bottom-width: 0px;
+.stationListItem.selected ul{
+  color: #ffffff !important;
+}
+
+.stationListItem .options{
+  background: rgba(255,255,255,0.5) !important;
+  color: #ffffff !important;
+}
+
+.stationNameText, #shuffleIcon{
+  text-shadow: none !important;
+}
+
+.slideDragContainer{
+  display: none !important;
+}
+
+.slidesBackground.unselectable.clearfix img{
+  display: none;
+}
+
+.slides.unselectable{
+  margin-top: -181px !important;
+}
+
+.fxCol-cont-1{
+  background: transparent !important;
 }
