@@ -172,10 +172,17 @@ body {
   background: transparent !important;
 }
 
+#single-block{
+  width: 40px;
+  height: 40px;
+  margin-top: 20px;
+  float: right;
+}
+
 img.spotify, #blocks{
   float: right;
 }
-#blocks{
+#blocks, #single-block{
   visibility: hidden;
 }
 
@@ -200,8 +207,13 @@ img.spotify, #blocks{
   width: 68%;
   display: inline-block;
   list-style: none;
-  margin-left: 20px;
+  /*margin-left: 20px;*/
+  padding-left: 20px;
   position: relative;
+}
+
+#info{
+  /*background: rgba(0,0,0,0.2) !important;*/
 }
 
 table.table{

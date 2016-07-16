@@ -13,7 +13,7 @@ $(document).ready(function() {
   $('#sidebar').append($('.stationContent'));
   $('.skinContainer').hide();
   $('body').append('<img class="spotify" width="100%" height="100%" src="" crossOrigin="anonymous" style="display: inline;">');
-  $('body').append('<div id="blocks"></div>');
+  $('body').append('<div id="blocks"></div><div id="single-block"></div>"');
   $('#user_menu_dd ul').append('<li><a href="/feed">Music Feed</a></li>');
   $('#user_menu_dd ul').append('<li><a id="current-station" href="'+currentPathName+'">Current Station</a></li>');
   $('#my-content #img').prepend($(currentSong).find('img.art'));
@@ -33,8 +33,12 @@ $(document).ready(function() {
     }
   });
 
+  function stripIt(string){
+    console.log(string.replace(/\W+/g, " "));
+  }
+
   function pairIt(match){
-    console.log('MATCH', match);
+    console.log('MATCH', match, match.matchCount);
     albumImageUrl = match.images[0]['url'];
 
     spotifyApi.getAlbum(match.id).then(function(album){
@@ -49,14 +53,16 @@ $(document).ready(function() {
         trackIds.push(item.id);
       });
       spotifyApi.getTracks(trackIds).then(function(data){
-        console.log(data);
+        // console.log(data);
         $.each(data.tracks, function(i, track){
-          console.log(track);
+          // console.log(track);
           if($('#track'+track.track_number).length > 0){
-            console.log($('#track'+track.track_number));
+            // console.log($('#track'+track.track_number));
           } else {
             $('#my-content #info tbody').append('<tr id="id'+i+'"><td id="track'+track.track_number+'" class="iter">'+track.track_number+'</td><td>'+track.name+'</td><td><div class="pop" style="width:'+track.popularity+'px;"></div><div>'+track.popularity+'</div></td></tr>');
-            if(track.name === $('.playerBarSong').text()){
+            if(track.name.toLowerCase() === $('.playerBarSong').text().toLowerCase()){
+              stripIt(track.name);
+              stripIt($('.playerBarSong').text());
               $('#id'+i).css('background-color', 'rgba(255,255,255,0.2)');
             }
           }
@@ -69,6 +75,12 @@ $(document).ready(function() {
       $('#blocks').empty();
       var colorThief = new ColorThief();
       var myImage = $('img.spotify')[0];
+      // var singleColor = colorThief.getColor(myImage);
+      // console.log('singleColor', singleColor);
+      // _.each(['table.table', ''], function(item){
+      //
+      // });
+      // $('#info').css('background-color', 'rgba('+singleColor[0]+','+singleColor[1]+','+singleColor[2]+', 0.2)');
       var colors = colorThief.getPalette(myImage, 4);
       var colorArr = [];
       console.log(colors);
@@ -79,7 +91,6 @@ $(document).ready(function() {
         $('#blocks').append('<div style="width: 20px; height: 20px; margin:5px; background-color: '+rgbColor+';"></div>');
       });
       console.log(colorArr.join(', '));
-      // currentSong = $('.stationSlides.clearfix .slide')[1];
       $('#my-content #img').prepend($('img.spotify'));
       $('body').attr('style', 'background: linear-gradient(270deg, '+colorArr.join(', ')+');');
     });
@@ -95,57 +106,35 @@ $(document).ready(function() {
     var albumName = $('.trackData .albumTitle').text();
     var artist = $('.info .playerBarArtist').text().split(' &')[0];
     console.log(artist);
-    var count = 0,
-        albumImageUrl = '';
+    var albumImageUrl = '';
+        allAlbums = [],
+        curMaxCount = 1;
 
-    if(count === 0){
-      spotifyApi.searchArtists(artist)
-        .then(function(data) {
-          // console.log(artist, data.artists.items);
-          $.each(data.artists.items, function(i, artist){
-            if(count === 0){
-            // console.log('artist', artist);
-              spotifyApi.getArtistAlbums(artist.id, {limit: 50}).then(function(data){
-                console.log('albums', data.items);
-                var nAlbumName = albumName.toLowerCase().replace('\'', '');
-                // map each data items so that they don't inclue the parens either
-                $.each(data.items, function(i, item){
-                  // console.log(item);
-                  item.name = item.name.toLowerCase().replace('\'', '');
-                });
-                // console.log(nAlbumName, data.items, _.findWhere(data.items, {name: nAlbumName}));
-                var match = _.findWhere(data.items, {name: nAlbumName});
-                if(match && count === 0){
-                  count += 1;
-                  $('#artist').html('<a href="'+artist.external_urls.spotify+'" target="_blank">by '+artist.name+'</a>');
-                  $('#album-name').html('<a href="'+match.external_urls.spotify+'" target="_blank">'+albumName+'</a>');
-                  pairIt(match);
-                  return;
-                } else {
-                  nAlbumName = albumName.toLowerCase().replace('\'', '').split(' (')[0];
-                  nAlbumName = nAlbumName.split(' -')[0];
-                  // map each data items so that they don't inclue the parens either
-                  $.each(data.items, function(i, item){
-                    // console.log(item);
-                    thing = item.name.toLowerCase().replace('\'', '').split(' (')[0];
-                    item.name = thing.split(' -')[0];
-                  });
-                  console.log('else', nAlbumName);
-                  // console.log(nAlbumName, data.items, _.findWhere(data.items, {name: nAlbumName}));
-                  var match = _.findWhere(data.items, {name: nAlbumName});
-                  if(match && count === 0){
-                    count += 1;
-                    $('#artist').html('<a href="'+artist.external_urls.spotify+'" target="_blank">by '+artist.name+'</a>');
-                    $('#album-name').html('<a href="'+match.external_urls.spotify+'" target="_blank">'+albumName+'</a>');
-                    pairIt(match);
-                    return;
-                  }
-                }
-              });
+    spotifyApi.searchArtists(artist)
+      .then(function(data) {
+        // console.log(artist, data.artists.items);
+        $.each(data.artists.items, function(i, artist){
+          // console.log('artist', artist);
+          spotifyApi.getArtistAlbums(artist.id, {limit: 50}).then(function(data){
+            // console.log('albums', data.items);
+            var albumArray = albumName.toLowerCase().replace(':', '').replace('(', '').replace(')', '').split(' ');
+            $.each(data.items, function(i, item){
+              console.log(item.name);
+              var itemAlbumArray = item.name.toLowerCase().replace(':', '').replace('(', '').replace(')', '').split(' ');
+              item.matchCount = _.intersection(albumArray, itemAlbumArray).length/itemAlbumArray.length*100;
+              allAlbums.push(item);
+            });
+            var match = _.max(data.items, function(item){ return item.matchCount; });
+            if(match.matchCount >= curMaxCount){
+              curMaxCount = match.matchCount;
+              $('#artist').html('by <a href="'+artist.external_urls.spotify+'" target="_blank">'+artist.name+'</a>');
+              $('#album-name').html('<a href="'+match.external_urls.spotify+'" target="_blank">'+albumName+'</a>');
+              pairIt(match);
             }
           });
         });
-      }
+      });
+
       }, function(err) {
         console.error(err);
     });
